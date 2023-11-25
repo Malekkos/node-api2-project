@@ -7,10 +7,6 @@ const server = express()
 const Post = require("./posts/posts-model")
 // /api/posts will be seperated
 
-
-
-
-
 server.get("/api/posts", (req, res) => {
     Post.find()
     .then(posts => {
@@ -23,7 +19,25 @@ server.get("/api/posts", (req, res) => {
     })
 })
 
-server.get // /api/posts/:id
+server.get("/api/posts/:id", (req, res) => {
+  console.log("these are the req params", req.params) //correctly returns an id
+  Post.findById(req.params.id)
+  .then(post => {
+    console.log(post)
+    if(!post) {
+      res.status(404).json({
+        message: "The post with the specified ID does not exist"
+      })
+    } else {
+      res.status(200).json(post)
+    }
+  })
+  .catch(() => {
+    res.status(500).json({
+      message: "The post information could not be retrieved"
+    })
+  })
+}) // /api/posts/:id
 
 server.post // /api/posts
 
