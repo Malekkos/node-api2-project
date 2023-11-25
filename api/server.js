@@ -20,10 +20,8 @@ server.get("/api/posts", (req, res) => {
 })
 
 server.get("/api/posts/:id", (req, res) => {
-  console.log("these are the req params", req.params)
   Post.findById(req.params.id)
   .then(post => {
-    console.log(post)
     if(!post) {
       res.status(404).json({
         message: "The post with the specified ID does not exist"
@@ -39,7 +37,10 @@ server.get("/api/posts/:id", (req, res) => {
   })
 })
 
-server.post // /api/posts
+server.post("/api/posts", (req, res) => {
+  console.log(req.body)
+    Post.insert(req.body)
+}) // /api/posts
 
 server.put // /api/posts/:id
 
