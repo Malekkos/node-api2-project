@@ -12,7 +12,6 @@ const Post = require("./posts/posts-model")
 
 
 server.get("/api/posts", (req, res) => {
-  // console.log(req)
     Post.find()
     .then(posts => {
       res.status(200).json(posts)
@@ -22,7 +21,7 @@ server.get("/api/posts", (req, res) => {
         message: "The posts information could not be retrieved"
       })
     })
-}) // /api/posts
+})
 
 server.get // /api/posts/:id
 
