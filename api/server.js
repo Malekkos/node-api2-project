@@ -20,7 +20,7 @@ server.get("/api/posts", (req, res) => {
 })
 
 server.get("/api/posts/:id", (req, res) => {
-  console.log("these are the req params", req.params) //correctly returns an id
+  console.log("these are the req params", req.params)
   Post.findById(req.params.id)
   .then(post => {
     console.log(post)
@@ -37,7 +37,7 @@ server.get("/api/posts/:id", (req, res) => {
       message: "The post information could not be retrieved"
     })
   })
-}) // /api/posts/:id
+})
 
 server.post // /api/posts
 
