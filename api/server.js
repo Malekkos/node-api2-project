@@ -1,10 +1,10 @@
 // implement your server here
 // require your posts router and connect it here
 const express = require("express");
+const Post = require("./posts/posts-model")
 
 const server = express()
 
-const Post = require("./posts/posts-model")
 // /api/posts will be seperated
 
 server.get("/api/posts", (req, res) => {
@@ -38,8 +38,17 @@ server.get("/api/posts/:id", (req, res) => {
 })
 
 server.post("/api/posts", (req, res) => {
-  console.log(req.body)
+  console.log("This is the request body", req.body)
     Post.insert(req.body)
+    .then(post => {
+      console.log("this is the post", post)
+      res.status(201).json(post)
+    })
+    .catch(() => {
+      res.status(500).json({
+        message: "There was an error while saving the post to the database"
+      })
+    })
 }) // /api/posts
 
 server.put // /api/posts/:id
