@@ -34,7 +34,6 @@ Post.findById(req.params.id)
 })
 
 router.post("/", (req, res) => {
-console.log("This is the request body", req.body)
   const {title, contents} = req.body
   if(!title || !contents) {
     res.status(400).json({
@@ -46,7 +45,6 @@ console.log("This is the request body", req.body)
     return Post.findById(id)
   })
   .then(post => {
-    console.log("this is the post", post)
     res.status(201).json(post)
   })
   .catch(() => {
@@ -55,7 +53,7 @@ console.log("This is the request body", req.body)
     })
   })
 }
-}) // /api/posts
+})
 
 router.put // /api/posts/:id
 
