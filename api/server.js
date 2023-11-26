@@ -1,60 +1,14 @@
 // implement your server here
 // require your posts router and connect it here
 const express = require("express");
-const Post = require("./posts/posts-model")
-
+const postsRouter = require("./posts/posts-router")
 const server = express()
+server.use(express.json())
+
+server.use("/api/posts", postsRouter)
 
 // /api/posts will be seperated
 
-server.get("/api/posts", (req, res) => {
-    Post.find()
-    .then(posts => {
-      res.status(200).json(posts)
-    })
-    .catch(() => {
-      res.status(500).json({
-        message: "The posts information could not be retrieved"
-      })
-    })
-})
 
-server.get("/api/posts/:id", (req, res) => {
-  Post.findById(req.params.id)
-  .then(post => {
-    if(!post) {
-      res.status(404).json({
-        message: "The post with the specified ID does not exist"
-      })
-    } else {
-      res.status(200).json(post)
-    }
-  })
-  .catch(() => {
-    res.status(500).json({
-      message: "The post information could not be retrieved"
-    })
-  })
-})
-
-server.post("/api/posts", (req, res) => {
-  console.log("This is the request body", req.body)
-    Post.insert(req.body)
-    .then(post => {
-      console.log("this is the post", post)
-      res.status(201).json(post)
-    })
-    .catch(() => {
-      res.status(500).json({
-        message: "There was an error while saving the post to the database"
-      })
-    })
-}) // /api/posts
-
-server.put // /api/posts/:id
-
-server.delete // /api/posts/:id
-
-server.get // /api/posts/:id/comments
 
 module.exports = server
