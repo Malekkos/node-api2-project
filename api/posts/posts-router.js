@@ -35,7 +35,16 @@ Post.findById(req.params.id)
 
 router.post("/", (req, res) => {
 console.log("This is the request body", req.body)
-  Post.insert(req.body)
+  const {title, contents} = req.body
+  if(!title || !contents) {
+    res.status(400).json({
+      message: "Please provide title and contents for the post"
+    })
+  } else {
+  Post.insert({title, contents})
+  .then(({ id }) => {
+    return Post.findById(id)
+  })
   .then(post => {
     console.log("this is the post", post)
     res.status(201).json(post)
@@ -45,6 +54,7 @@ console.log("This is the request body", req.body)
       message: "There was an error while saving the post to the database"
     })
   })
+}
 }) // /api/posts
 
 router.put // /api/posts/:id
