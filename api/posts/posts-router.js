@@ -92,7 +92,6 @@ router.put("/:id", (req,res) => {
 
 router.delete("/:id", (req, res) => {
   const id = req.params.id
-  console.log("this is the id ", id) // works
   Post.findById(id)
   .then(post => {
     if(!post) {
@@ -111,9 +110,32 @@ router.delete("/:id", (req, res) => {
       })
     }
   })
-}) // /api/posts/:id
+})
 
-router.get // /api/posts/:id/comments
+router.get("/:id/comments", (req, res) => {
+  const id = req.params.id
+  console.log("this is the id", id) //works
+  Post.findById(id)
+  .then(post => {
+    console.log("this is the post", post) //works
+    if(!post) {
+      res.status(404).json({
+        message: "The post with the specified ID does not exist"
+      })
+    } else {
+      Post.findPostComments(post.id)
+      .then(comments => {
+        console.log(`these are the comments for post number ${post.id}`, comments) //works
+        res.status(200).json(comments)
+      })
+      .catch(() => {
+        res.status(500).json({
+          message: "The comments information could not be retrieved"
+        })
+      })
+    }
+  })
+}) // /api/posts/:id/comments
 
 
 module.exports = router
