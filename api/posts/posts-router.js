@@ -67,15 +67,20 @@ router.put("/:id", (req,res) => {
     } else {
       Post.findById(id)
       .then(post => {
+        console.log("this is the Post.findById post", post)
         if(!post) {
           res.status(404).json({
             message: "The post with the specified ID does not exist"
-          }) 
+          })
         } else {
           Post.update(id, req.body)
-          .then(post => {
-            console.log("this is the Post.update post", post)
-            res.status(200).json(post)
+          .then((post) => {
+            console.log("this is the Post.update post", post) //returns 1
+            Post.findById(id)
+            .then((post) => {
+              res.status(200).json(post)
+            })
+            // res.status(200).json(post)
           })
           .catch(() => {
             res.status(500).json({
