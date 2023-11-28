@@ -88,7 +88,7 @@ router.put("/:id", (req,res) => {
 
     }
     
-}) // /api/posts/:id
+})
 
 router.delete // /api/posts/:id
 
