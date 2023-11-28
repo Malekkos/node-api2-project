@@ -56,9 +56,7 @@ router.post("/", (req, res) => {
 })
 
 router.put("/:id", (req,res) => {
-  console.log("this is the request body", req.body)
   const {title, contents} = req.body
-  console.log("these are the request params for id", req.params.id)
   const id = req.params.id
   if(!title || !contents) {
     res.status(400).json({
@@ -67,7 +65,6 @@ router.put("/:id", (req,res) => {
     } else {
       Post.findById(id)
       .then(post => {
-        console.log("this is the Post.findById post", post)
         if(!post) {
           res.status(404).json({
             message: "The post with the specified ID does not exist"
@@ -75,12 +72,10 @@ router.put("/:id", (req,res) => {
         } else {
           Post.update(id, req.body)
           .then((post) => {
-            console.log("this is the Post.update post", post) //returns 1
             Post.findById(id)
             .then((post) => {
               res.status(200).json(post)
             })
-            // res.status(200).json(post)
           })
           .catch(() => {
             res.status(500).json({
