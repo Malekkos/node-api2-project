@@ -114,10 +114,8 @@ router.delete("/:id", (req, res) => {
 
 router.get("/:id/comments", (req, res) => {
   const id = req.params.id
-  console.log("this is the id", id) //works
   Post.findById(id)
   .then(post => {
-    console.log("this is the post", post) //works
     if(!post) {
       res.status(404).json({
         message: "The post with the specified ID does not exist"
@@ -125,7 +123,6 @@ router.get("/:id/comments", (req, res) => {
     } else {
       Post.findPostComments(post.id)
       .then(comments => {
-        console.log(`these are the comments for post number ${post.id}`, comments) //works
         res.status(200).json(comments)
       })
       .catch(() => {
@@ -135,7 +132,7 @@ router.get("/:id/comments", (req, res) => {
       })
     }
   })
-}) // /api/posts/:id/comments
+})
 
 
 module.exports = router
